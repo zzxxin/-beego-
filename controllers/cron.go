@@ -116,3 +116,23 @@ func (c *CronController) UpCron() {
 	c.Data["act"] = "update"
 	c.TplName = "cron/addcron.tpl"
 }
+
+// 修改cron状态
+func (c *CronController) UpCronStatus() {
+	id, _ := c.GetInt("id", 0)
+	status, _ := c.GetInt("status")
+
+	if id == 0 {
+		c.Alert("参数异常", 30001, "/user_list")
+		return
+	}
+
+	// 调用服务层修改用户状态
+	err := models.UpdateCronStatus(int64(id), "task_status", status)
+
+	if err != nil {
+		c.Alert("操作失败，请重试", 302, "/cron_list")
+	} else {
+		c.Alert("操作成功", 200, "/cron_list")
+	}
+}
