@@ -67,3 +67,8 @@ func UpdateCron(fields map[string]interface{}, where string, args ...interface{}
 	// 使用 GORM 的 Updates 方法，只更新传递的字段
 	return db.DB.Model(&CronTask{}).Where(where, args...).Updates(fields).Error
 }
+
+func UpdateCronStatus(id int64, fieldName string, fieldValue interface{}) error {
+	// 调用模型层更新字段
+	return db.DB.Model(&CronTask{}).Where("id = ?", id).UpdateColumn(fieldName, fieldValue).Error
+}

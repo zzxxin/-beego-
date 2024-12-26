@@ -79,6 +79,7 @@ func init() {
 	beego.Router("/cron_list", &controllers.CronController{}, "*:CronList")
 	beego.Router("/add_cron", &controllers.CronController{}, "*:AddCron")
 	beego.Router("/up_cron", &controllers.CronController{}, "*:UpCron")
+	beego.Router("/up_cron_status", &controllers.CronController{}, "*:UpCronStatus")
 
 	/******************** 计划任务 end **************************/
 

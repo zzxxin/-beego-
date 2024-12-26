@@ -39,6 +39,11 @@
                             <td>{{ if eq .TaskStatus 1 }}开启{{ else }}关闭{{ end }}</td>
                             <td>{{ .TaskDesc }}</td>
                             <td>
+                                {{ if eq .TaskStatus 1 }}
+                                <a onclick='hidden_compose_status("{{ .ID }}", "{{ .TaskName }}", 2)' href="#" class="btn btn-success btn-outline">停用</a>
+                                {{ else }}
+                                <a onclick='hidden_compose_status("{{ .ID }}", "{{ .TaskName }}", 1)' href="#" class="btn btn-success btn-outline">启用</a>
+                                {{ end }}
                                 <a href="/up_cron?id={{ .ID }}" class="btn btn-success btn-outline">编辑Cron</a>
                             </td>
                         </tr>
@@ -63,6 +68,14 @@
             location.href = "/cron_set?type=" + type + "&status=" + status;
         }
     }
+
+    function hidden_compose_status(id, cron_name, status) {
+        var msg = status == 2 ? '停用' : '启用';
+        if (confirm('是否要' + msg + '计划任务：' + cron_name + '？')) {
+            location.href = "/up_cron_status?id=" + id + "&status=" + status;
+        }
+    }
+
 </script>
 </body>
 
